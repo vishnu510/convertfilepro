@@ -24,6 +24,24 @@ const progressFill = document.getElementById('progress-fill');
 const downloadBtn = document.getElementById('download-btn');
 const resetBtn = document.getElementById('reset-btn');
 
+// Mobile Menu Logic
+const menuToggle = document.getElementById('menu-toggle');
+const navContainer = document.getElementById('nav-container');
+const navLinks = document.querySelectorAll('.nav-link');
+
+menuToggle.addEventListener('click', () => {
+    navContainer.classList.toggle('active');
+    menuToggle.classList.toggle('nav-active');
+});
+
+// Close menu when clicking a link
+navLinks.forEach(link => {
+    link.addEventListener('click', () => {
+        navContainer.classList.remove('active');
+        menuToggle.classList.remove('nav-active');
+    });
+});
+
 let currentTool = '';
 let uploadedFiles = [];
 let resultBlob = null;

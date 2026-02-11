@@ -84,6 +84,25 @@ body {
     color: var(--text-primary);
 }
 
+.menu-toggle {
+    display: none;
+    flex-direction: column;
+    gap: 6px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0.5rem;
+    z-index: 1001;
+}
+
+.bar {
+    width: 24px;
+    height: 2px;
+    background-color: var(--text-primary);
+    transition: var(--transition);
+    border-radius: 2px;
+}
+
 /* Hero Section */
 .hero {
     padding: 10rem 0 6rem;
@@ -485,12 +504,104 @@ body {
 }
 
 /* Responsive */
-@media (max-width: 768px) {
+@media (max-width: 1024px) {
     .hero-title {
-        font-size: 2.5rem;
+        font-size: 3.5rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .menu-toggle {
+        display: flex;
+    }
+
+    .nav-container {
+        position: fixed;
+        top: 0;
+        right: -100%;
+        width: 80%;
+        max-width: 350px;
+        height: 100vh;
+        background: var(--bg-modal);
+        padding: 6rem 2rem 2rem;
+        transition: var(--transition);
+        box-shadow: -10px 0 30px rgba(0, 0, 0, 0.5);
+        z-index: 1000;
+        backdrop-filter: blur(20px);
+    }
+
+    .nav-container.active {
+        right: 0;
+    }
+
+    .nav-links {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 2rem;
+    }
+
+    .nav-link {
+        font-size: 1.25rem;
+        width: 100%;
+    }
+
+    .nav-links .btn {
+        width: 100%;
+        margin-top: 1rem;
+    }
+
+    /* Hamburger Animation */
+    .nav-active .bar:nth-child(1) {
+        transform: translateY(8px) rotate(45deg);
+    }
+    .nav-active .bar:nth-child(2) {
+        opacity: 0;
+    }
+    .nav-active .bar:nth-child(3) {
+        transform: translateY(-8px) rotate(-45deg);
+    }
+
+    .hero-title {
+        font-size: 2.75rem;
+    }
+
+    .hero-subtitle {
+        font-size: 1.1rem;
+    }
+
+    .hero-cta {
+        flex-direction: column;
+        padding: 0 1rem;
+    }
+
+    .btn-large {
+        width: 100%;
     }
 
     .modal {
-        padding: 2rem;
+        padding: 2rem 1.5rem;
+        width: 95%;
+    }
+
+    .section-title {
+        font-size: 2rem;
+    }
+
+    .tools-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 480px) {
+    .hero-title {
+        font-size: 2.25rem;
+    }
+
+    .hero {
+        padding: 8rem 0 4rem;
+    }
+
+    .logo-text {
+        font-size: 1.25rem;
     }
 }
