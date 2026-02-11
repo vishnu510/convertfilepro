@@ -105,9 +105,10 @@ export async function convertImageFormat(file, targetFormat) {
 /**
  * Compress a PDF by re-rendering pages at lower quality
  * @param {File} file 
+ * @param {number} quality Compression quality (0.1 to 1.0)
  * @returns {Promise<Blob>}
  */
-export async function compressPdf(file) {
+export async function compressPdf(file, quality = 0.4) {
     const arrayBuffer = await file.arrayBuffer();
     const pdf = await pdfjsLib.getDocument({ data: arrayBuffer }).promise;
 
@@ -122,7 +123,6 @@ export async function compressPdf(file) {
         const page = await pdf.getPage(i);
 
         // Use scale index to control quality/file size trade-off
-        // A scale of 1.0 at 72 DPI (default for PDF) is standard
         const viewport = page.getViewport({ scale: 1.0 });
 
         const canvas = document.createElement('canvas');
@@ -132,8 +132,8 @@ export async function compressPdf(file) {
 
         await page.render({ canvasContext: context, viewport }).promise;
 
-        // Lower quality JPG for compression (0.4 is a good balance for compression)
-        const imageData = canvas.toDataURL('image/jpeg', 0.4);
+        // Use user-provided quality for compression
+        const imageData = canvas.toDataURL('image/jpeg', quality);
 
         if (i > 1) {
             doc.addPage([viewport.width, viewport.height], viewport.width > viewport.height ? 'l' : 'p');
@@ -153,9 +153,10 @@ export async function compressPdf(file) {
  * Compress an image by reducing quality
  * @param {File} file 
  * @param {string} format 'image/jpeg' or 'image/png'
+ * @param {number} quality Compression quality (0.1 to 1.0)
  * @returns {Promise<Blob>}
  */
-export async function compressImage(file, format) {
+export async function compressImage(file, format, quality = 0.6) {
     const dataUrl = await fileToDataURL(file);
     const img = new Image();
     img.src = dataUrl;
@@ -167,8 +168,6 @@ export async function compressImage(file, format) {
     const ctx = canvas.getContext('2d');
     ctx.drawImage(img, 0, 0);
 
-    // 0.6 represents medium/low quality for better compression
-    const quality = format === 'image/jpeg' ? 0.6 : 0.8;
     const resultDataUrl = canvas.toDataURL(format, quality);
     return dataURLtoBlob(resultDataUrl);
 }

@@ -204,6 +204,19 @@
 
                 <div id="file-list-container" class="file-list-container hidden">
                     <ul id="file-list" class="file-list"></ul>
+
+                    <div id="quality-selector" class="quality-selector hidden">
+                        <div class="quality-info">
+                            <span>Compression Quality</span>
+                            <span id="quality-value">70%</span>
+                        </div>
+                        <input type="range" id="quality-range" min="10" max="100" value="70" class="quality-range">
+                        <div class="quality-labels">
+                            <span>Smaller File</span>
+                            <span>Better Quality</span>
+                        </div>
+                    </div>
+
                     <div class="actions">
                         <button id="convert-btn" class="btn btn-primary btn-full">Convert Files</button>
                     </div>

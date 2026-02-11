@@ -24,6 +24,10 @@ const progressFill = document.getElementById('progress-fill');
 const downloadBtn = document.getElementById('download-btn');
 const resetBtn = document.getElementById('reset-btn');
 
+const qualitySelector = document.getElementById('quality-selector');
+const qualityRange = document.getElementById('quality-range');
+const qualityValueDisplay = document.getElementById('quality-value');
+
 // Mobile Menu Logic
 const menuToggle = document.getElementById('menu-toggle');
 const navContainer = document.getElementById('nav-container');
@@ -46,6 +50,7 @@ let currentTool = '';
 let uploadedFiles = [];
 let resultBlob = null;
 let resultFileName = '';
+let currentQuality = 0.7;
 
 // Tool selection
 toolCards.forEach(card => {
@@ -53,15 +58,33 @@ toolCards.forEach(card => {
         currentTool = card.getAttribute('data-type');
         modalTitle.textContent = card.querySelector('.tool-name').textContent;
 
-        // Dynamically update button text
+        // Show/Hide quality selector for compression tools
         if (currentTool.includes('compress')) {
+            qualitySelector.classList.remove('hidden');
             convertBtn.textContent = 'Compress Files';
+            // Set default qualities based on tool
+            if (currentTool === 'compress-pdf') {
+                qualityRange.value = 40;
+                currentQuality = 0.4;
+            } else {
+                qualityRange.value = 70;
+                currentQuality = 0.7;
+            }
+            qualityValueDisplay.textContent = `${qualityRange.value}%`;
         } else {
+            qualitySelector.classList.add('hidden');
             convertBtn.textContent = 'Convert Files';
         }
 
         openModal();
     });
+});
+
+// Quality slider change
+qualityRange.addEventListener('input', (e) => {
+    const value = e.target.value;
+    qualityValueDisplay.textContent = `${value}%`;
+    currentQuality = value / 100;
 });
 
 function openModal() {
@@ -173,15 +196,15 @@ convertBtn.addEventListener('click', async () => {
                 resultFileName = uploadedFiles[0].name.replace('.jpg', '.png');
                 break;
             case 'compress-pdf':
-                resultBlob = await compressPdf(uploadedFiles[0]);
+                resultBlob = await compressPdf(uploadedFiles[0], currentQuality);
                 resultFileName = 'compressed.pdf';
                 break;
             case 'compress-jpg':
-                resultBlob = await compressImage(uploadedFiles[0], 'image/jpeg');
+                resultBlob = await compressImage(uploadedFiles[0], 'image/jpeg', currentQuality);
                 resultFileName = 'compressed.jpg';
                 break;
             case 'compress-png':
-                resultBlob = await compressImage(uploadedFiles[0], 'image/png');
+                resultBlob = await compressImage(uploadedFiles[0], 'image/png', currentQuality);
                 resultFileName = 'compressed.png';
                 break;
             case 'jpg-to-webp':
