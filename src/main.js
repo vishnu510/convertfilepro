@@ -126,6 +126,7 @@ function resetUI() {
     dropZone.classList.remove('hidden');
     processingContainer.classList.add('hidden');
     resultContainer.classList.add('hidden');
+    fileInput.value = '';
     progressFill.style.width = '0%';
 }
 
