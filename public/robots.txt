@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://vishnu510.github.io/convertfilepro/sitemap.xml

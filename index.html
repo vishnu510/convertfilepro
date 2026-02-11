@@ -4,9 +4,55 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FileConverter Pro | All-in-One File Tools</title>
+    <title>FileConverter Pro | Fast, Secure & Free Online File Tools</title>
     <meta name="description"
-        content="Fast, secure, and easy-to-use client-side file converter. Convert JPG to PDF, PDF to JPG, PNG to JPG, and more.">
+        content="Ultimate all-in-one file converter. Convert JPG to PDF, PDF to JPG, PNG to JPG, Compress PDF, and JPG to WebP. 100% secure, processed entirely in your browser.">
+    <meta name="keywords"
+        content="file converter, jpg to pdf, pdf to jpg, png to jpg, compress pdf, compress jpg, compress png, jpg to webp, online converter, free file tools, secure file conversion">
+    <meta name="author" content="FileConverter Pro">
+    <link rel="canonical" href="https://vishnu510.github.io/convertfilepro/" />
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://vishnu510.github.io/convertfilepro/">
+    <meta property="og:title" content="FileConverter Pro | Fast & Secure Online File Tools">
+    <meta property="og:description"
+        content="Convert and compress your files locally in your browser. JPG, PNG, PDF, WebP and more. No uploads needed.">
+    <meta property="og:image" content="https://vishnu510.github.io/convertfilepro/og-image.jpg">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://vishnu510.github.io/convertfilepro/">
+    <meta property="twitter:title" content="FileConverter Pro | All-in-One File Tools">
+    <meta property="twitter:description"
+        content="100% secure client-side file conversion. Your files never leave your browser.">
+    <meta property="twitter:image" content="https://vishnu510.github.io/convertfilepro/og-image.jpg">
+
+    <!-- Structured Data (JSON-LD) -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "FileConverter Pro",
+      "url": "https://vishnu510.github.io/convertfilepro/",
+      "description": "Fast, secure, and easy-to-use client-side file converter and compressor.",
+      "applicationCategory": "Utility",
+      "operatingSystem": "All",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      },
+      "featureList": [
+        "JPG to PDF conversion",
+        "PDF to JPG conversion",
+        "PNG to JPG conversion",
+        "PDF Compression",
+        "Image Compression",
+        "JPG to WebP conversion"
+      ]
+    }
+    </script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -16,8 +62,8 @@
 <body>
     <header class="header">
         <nav class="container nav">
-            <a href="./" class="logo">
-                <span class="logo-icon">📂</span>
+            <a href="./" class="logo" aria-label="FileConverter Pro Homepage">
+                <span class="logo-icon" aria-hidden="true">📂</span>
                 <span class="logo-text">FileConverter<span>Pro</span></span>
             </a>
             <button class="menu-toggle" id="menu-toggle" aria-label="Toggle Menu">
@@ -62,56 +108,56 @@
 
                 <div class="tools-grid">
                     <div class="tool-card" id="tool-jpg-pdf" data-type="jpg-to-pdf">
-                        <div class="tool-icon jpg-pdf">📄</div>
+                        <div class="tool-icon jpg-pdf" aria-label="Convert JPG to PDF">📄</div>
                         <h3 class="tool-name">JPG to PDF</h3>
                         <p class="tool-info">Convert JPG images to PDF documents in seconds.</p>
                         <span class="tool-action">Start →</span>
                     </div>
 
                     <div class="tool-card" id="tool-pdf-jpg" data-type="pdf-to-jpg">
-                        <div class="tool-icon pdf-jpg">🖼️</div>
+                        <div class="tool-icon pdf-jpg" aria-label="Convert PDF to JPG">🖼️</div>
                         <h3 class="tool-name">PDF to JPG</h3>
                         <p class="tool-info">Extract images or save PDF pages as JPG files.</p>
                         <span class="tool-action">Start →</span>
                     </div>
 
                     <div class="tool-card" id="tool-png-jpg" data-type="png-to-jpg">
-                        <div class="tool-icon png-jpg">🔄</div>
+                        <div class="tool-icon png-jpg" aria-label="Convert PNG to JPG">📷</div>
                         <h3 class="tool-name">PNG to JPG</h3>
                         <p class="tool-info">Convert PNG images to JPG format quickly.</p>
                         <span class="tool-action">Start →</span>
                     </div>
 
                     <div class="tool-card" id="tool-jpg-png" data-type="jpg-to-png">
-                        <div class="tool-icon jpg-png">🎨</div>
+                        <div class="tool-icon jpg-png" aria-label="Convert JPG to PNG">🎨</div>
                         <h3 class="tool-name">JPG to PNG</h3>
                         <p class="tool-info">Convert JPG images to PNG with ease.</p>
                         <span class="tool-action">Start →</span>
                     </div>
 
                     <div class="tool-card" id="tool-compress-pdf" data-type="compress-pdf">
-                        <div class="tool-icon compress-pdf">🗜️</div>
+                        <div class="tool-icon compress-pdf" aria-label="Compress PDF File">🗜️</div>
                         <h3 class="tool-name">Compress PDF</h3>
                         <p class="tool-info">Reduce PDF file size without losing much quality.</p>
                         <span class="tool-action">Start →</span>
                     </div>
 
                     <div class="tool-card" id="tool-compress-jpg" data-type="compress-jpg">
-                        <div class="tool-icon compress-jpg">📉</div>
+                        <div class="tool-icon compress-jpg" aria-label="Compress JPG Image">📉</div>
                         <h3 class="tool-name">Compress JPG</h3>
                         <p class="tool-info">Optimize JPG images for web and storage.</p>
                         <span class="tool-action">Start →</span>
                     </div>
 
                     <div class="tool-card" id="tool-compress-png" data-type="compress-png">
-                        <div class="tool-icon compress-png">📦</div>
+                        <div class="tool-icon compress-png" aria-label="Compress PNG Image">📦</div>
                         <h3 class="tool-name">Compress PNG</h3>
                         <p class="tool-info">Smallest possible file size for your PNGs.</p>
                         <span class="tool-action">Start →</span>
                     </div>
 
                     <div class="tool-card" id="tool-jpg-webp" data-type="jpg-to-webp">
-                        <div class="tool-icon jpg-webp">🌐</div>
+                        <div class="tool-icon jpg-webp" aria-label="Convert JPG to WebP">🌐</div>
                         <h3 class="tool-name">JPG to WebP</h3>
                         <p class="tool-info">Convert JPG to modern WebP format for fast web.</p>
                         <span class="tool-action">Start →</span>
