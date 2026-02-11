@@ -52,6 +52,14 @@ toolCards.forEach(card => {
     card.addEventListener('click', () => {
         currentTool = card.getAttribute('data-type');
         modalTitle.textContent = card.querySelector('.tool-name').textContent;
+
+        // Dynamically update button text
+        if (currentTool.includes('compress')) {
+            convertBtn.textContent = 'Compress Files';
+        } else {
+            convertBtn.textContent = 'Convert Files';
+        }
+
         openModal();
     });
 });
