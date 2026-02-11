@@ -62,6 +62,7 @@ toolCards.forEach(card => {
         if (currentTool.includes('compress')) {
             qualitySelector.classList.remove('hidden');
             convertBtn.textContent = 'Compress Files';
+            resetBtn.textContent = 'Compress More';
             // Set default qualities based on tool
             if (currentTool === 'compress-pdf') {
                 qualityRange.value = 40;
@@ -74,6 +75,7 @@ toolCards.forEach(card => {
         } else {
             qualitySelector.classList.add('hidden');
             convertBtn.textContent = 'Convert Files';
+            resetBtn.textContent = 'Convert More';
         }
 
         openModal();
