@@ -78,6 +78,19 @@ toolCards.forEach(card => {
             resetBtn.textContent = 'Convert More';
         }
 
+        // Set file type restrictions
+        const acceptMapping = {
+            'jpg-to-pdf': '.jpg,.jpeg',
+            'pdf-to-jpg': '.pdf',
+            'png-to-jpg': '.png',
+            'jpg-to-png': '.jpg,.jpeg',
+            'compress-pdf': '.pdf',
+            'compress-jpg': '.jpg,.jpeg',
+            'compress-png': '.png',
+            'jpg-to-webp': '.jpg,.jpeg'
+        };
+        fileInput.accept = acceptMapping[currentTool] || '';
+
         openModal();
     });
 });
