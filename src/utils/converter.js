@@ -100,6 +100,86 @@ export async function convertImageFormat(file, targetFormat) {
     return dataURLtoBlob(resultDataUrl);
 }
 
+/**
+ * Compress a PDF by re-rendering pages at lower quality
+ * @param {File} file 
+ * @returns {Promise<Blob>}
+ */
+export async function compressPdf(file) {
+    const arrayBuffer = await file.arrayBuffer();
+    const pdf = await pdfjsLib.getDocument({ data: arrayBuffer }).promise;
+    const doc = new jsPDF();
+
+    for (let i = 1; i <= pdf.numPages; i++) {
+        const page = await pdf.getPage(i);
+        // Reduce scale for compression
+        const viewport = page.getViewport({ scale: 1.5 });
+        const canvas = document.createElement('canvas');
+        const context = canvas.getContext('2d');
+        canvas.height = viewport.height;
+        canvas.width = viewport.width;
+
+        await page.render({ canvasContext: context, viewport }).promise;
+
+        // Lower quality JPG for compression
+        const imageData = canvas.toDataURL('image/jpeg', 0.6);
+
+        const pageWidth = doc.internal.pageSize.getWidth();
+        const pageHeight = doc.internal.pageSize.getHeight();
+
+        if (i > 1) doc.addPage();
+        doc.addImage(imageData, 'JPEG', 0, 0, pageWidth, pageHeight);
+    }
+
+    return doc.output('blob');
+}
+
+/**
+ * Compress an image by reducing quality
+ * @param {File} file 
+ * @param {string} format 'image/jpeg' or 'image/png'
+ * @returns {Promise<Blob>}
+ */
+export async function compressImage(file, format) {
+    const dataUrl = await fileToDataURL(file);
+    const img = new Image();
+    img.src = dataUrl;
+    await new Promise(resolve => img.onload = resolve);
+
+    const canvas = document.createElement('canvas');
+    canvas.width = img.width;
+    canvas.height = img.height;
+    const ctx = canvas.getContext('2d');
+    ctx.drawImage(img, 0, 0);
+
+    // 0.6 represents medium/low quality for better compression
+    const quality = format === 'image/jpeg' ? 0.6 : 0.8;
+    const resultDataUrl = canvas.toDataURL(format, quality);
+    return dataURLtoBlob(resultDataUrl);
+}
+
+/**
+ * Convert JPG to WebP
+ * @param {File} file 
+ * @returns {Promise<Blob>}
+ */
+export async function convertToWebP(file) {
+    const dataUrl = await fileToDataURL(file);
+    const img = new Image();
+    img.src = dataUrl;
+    await new Promise(resolve => img.onload = resolve);
+
+    const canvas = document.createElement('canvas');
+    canvas.width = img.width;
+    canvas.height = img.height;
+    const ctx = canvas.getContext('2d');
+    ctx.drawImage(img, 0, 0);
+
+    const resultDataUrl = canvas.toDataURL('image/webp', 0.8);
+    return dataURLtoBlob(resultDataUrl);
+}
+
+
 // Helpers
 function fileToDataURL(file) {
     return new Promise((resolve, reject) => {

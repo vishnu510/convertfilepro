@@ -1,5 +1,12 @@
 import './style.css';
-import { imagesToPdf, pdfToImages, convertImageFormat } from './utils/converter.js';
+import {
+    imagesToPdf,
+    pdfToImages,
+    convertImageFormat,
+    compressPdf,
+    compressImage,
+    convertToWebP
+} from './utils/converter.js';
 
 // Main UI Logic
 const modalContainer = document.getElementById('modal-container');
@@ -138,6 +145,22 @@ convertBtn.addEventListener('click', async () => {
             case 'jpg-to-png':
                 resultBlob = await convertImageFormat(uploadedFiles[0], 'image/png');
                 resultFileName = uploadedFiles[0].name.replace('.jpg', '.png');
+                break;
+            case 'compress-pdf':
+                resultBlob = await compressPdf(uploadedFiles[0]);
+                resultFileName = 'compressed.pdf';
+                break;
+            case 'compress-jpg':
+                resultBlob = await compressImage(uploadedFiles[0], 'image/jpeg');
+                resultFileName = 'compressed.jpg';
+                break;
+            case 'compress-png':
+                resultBlob = await compressImage(uploadedFiles[0], 'image/png');
+                resultFileName = 'compressed.png';
+                break;
+            case 'jpg-to-webp':
+                resultBlob = await convertToWebP(uploadedFiles[0]);
+                resultFileName = uploadedFiles[0].name.replace('.jpg', '.webp');
                 break;
         }
 
