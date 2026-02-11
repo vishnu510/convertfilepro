@@ -9,21 +9,29 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap"
         rel="stylesheet">
-    <link rel="stylesheet" href="/src/style.css">
+    <link rel="stylesheet" href="src/style.css">
 </head>
 
 <body>
     <header class="header">
-        <div class="container nav">
-            <a href="index.html" class="logo">
-                <span>ConvertFile<span>Pro</span></span>
+        <nav class="container nav">
+            <a href="index.html" class="logo" aria-label="FileConverter Pro Homepage">
+                <span class="logo-icon" aria-hidden="true">📂</span>
+                <span class="logo-text">FileConverter<span>Pro</span></span>
             </a>
-            <div class="nav-links">
-                <a href="index.html#tools" class="nav-link">Tools</a>
-                <a href="how-it-works.html" class="nav-link">How it works</a>
-                <a href="pricing.html" class="btn btn-primary">Try Pro</a>
+            <button class="menu-toggle" id="menu-toggle" aria-label="Toggle Menu">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </button>
+            <div class="nav-container" id="nav-container">
+                <div class="nav-links">
+                    <a href="index.html#tools" class="nav-link">Tools</a>
+                    <a href="how-it-works.html" class="nav-link">How it works</a>
+                    <a href="pricing.html" class="btn btn-primary">Try Pro</a>
+                </div>
             </div>
-        </div>
+        </nav>
     </header>
 
     <main class="pricing">
@@ -96,6 +104,16 @@
             </div>
         </div>
     </footer>
+    <script type="module">
+        // Basic mobile menu for this page
+        const menuToggle = document.getElementById('menu-toggle');
+        const navContainer = document.getElementById('nav-container');
+
+        menuToggle.addEventListener('click', () => {
+            navContainer.classList.toggle('active');
+            menuToggle.classList.toggle('nav-active');
+        });
+    </script>
 </body>
 
 </html>

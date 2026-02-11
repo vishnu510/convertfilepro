@@ -6,7 +6,8 @@ export default defineConfig({
     rollupOptions: {
       input: {
         main: 'index.html',
-        howItWorks: 'how-it-works.html'
+        howItWorks: 'how-it-works.html',
+        pricing: 'pricing.html'
       },
       output: {
         manualChunks(id) {
