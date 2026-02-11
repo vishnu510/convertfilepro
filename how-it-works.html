@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How It Works - FileConverter Pro</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="src/style.css">
+</head>
+
+<body>
+    <div class="blob blob-1"></div>
+    <div class="blob blob-2"></div>
+
+    <header class="header">
+        <nav class="container nav">
+            <a href="index.html" class="logo">
+                <span class="logo-icon">📂</span>
+                <span class="logo-text">FileConverter<span>Pro</span></span>
+            </a>
+            <button class="menu-toggle" id="menu-toggle" aria-label="Toggle Menu">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </button>
+            <div class="nav-container" id="nav-container">
+                <div class="nav-links">
+                    <a href="index.html#tools" class="nav-link">Tools</a>
+                    <a href="how-it-works.html" class="nav-link active">How it works</a>
+                    <a href="https://github.com/vishnu510/convertfilepro" class="nav-link">Github</a>
+                    <a href="index.html#tools" class="btn btn-primary">Use Tool</a>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <section class="hero">
+            <div class="container">
+                <h1 class="hero-title">How <span class="gradient-text">FileConverter Pro</span> Works</h1>
+                <p class="hero-subtitle">Simple, fast, and 100% secure. Follow these three easy steps to convert or
+                    compress your files right in your browser.</p>
+                <div class="hero-cta">
+                    <a href="index.html#tools" class="btn btn-primary btn-large">Use Tool Now</a>
+                </div>
+            </div>
+        </section>
+
+        <section class="tools-section">
+            <div class="container">
+                <div class="tools-grid">
+                    <div class="tool-card">
+                        <div class="tool-icon">📤</div>
+                        <h3 class="tool-name">1. Upload Your Files</h3>
+                        <p class="tool-info">Select the tool you need from our homepage and drop your files into the
+                            designated area. You can upload multiple images for PDF conversion or single files for
+                            compression.</p>
+                    </div>
+
+                    <div class="tool-card">
+                        <div class="tool-icon">⚙️</div>
+                        <h3 class="tool-name">2. Instant Processing</h3>
+                        <p class="tool-info">Click the convert or compress button. Our advanced browser-based logic
+                            handles everything locally on your machine. Your data never touches a server, ensuring 100%
+                            privacy.</p>
+                    </div>
+
+                    <div class="tool-card">
+                        <div class="tool-icon">📥</div>
+                        <h3 class="tool-name">3. Download & Save</h3>
+                        <p class="tool-info">Once processing is complete, your transformed file is ready for download.
+                            Simply click the download button to save it to your device instantly.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section-header" style="padding: 4rem 0;">
+            <div class="container">
+                <h2 class="section-title">Why Choose Us?</h2>
+                <div class="tools-grid" style="margin-top: 3rem;">
+                    <div class="tool-card" style="padding: 2rem;">
+                        <h4 style="margin-bottom: 0.5rem; color: var(--primary);">Full Privacy</h4>
+                        <p class="tool-info">Processing happens 100% in your browser. No files are ever uploaded to any
+                            server.</p>
+                    </div>
+                    <div class="tool-card" style="padding: 2rem;">
+                        <h4 style="margin-bottom: 0.5rem; color: var(--secondary);">Blazing Fast</h4>
+                        <p class="tool-info">No queue times or upload delays. Transformation starts the moment you
+                            click.</p>
+                    </div>
+                    <div class="tool-card" style="padding: 2rem;">
+                        <h4 style="margin-bottom: 0.5rem; color: var(--success);">Completely Free</h4>
+                        <p class="tool-info">All professional-grade tools are available for free with no hidden limits.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer style="padding: 4rem 0; text-align: center; border-top: 1px solid var(--border);">
+        <div class="container">
+            <p style="color: var(--text-secondary);">&copy; 2026 FileConverter Pro. Built for Speed & Privacy.</p>
+        </div>
+    </footer>
+
+    <script type="module">
+        // Basic mobile menu for this page
+        const menuToggle = document.getElementById('menu-toggle');
+        const navContainer = document.getElementById('nav-container');
+
+        menuToggle.addEventListener('click', () => {
+            navContainer.classList.toggle('active');
+            menuToggle.classList.toggle('nav-active');
+        });
+    </script>
+</body>
+
+</html>
