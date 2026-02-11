@@ -28,6 +28,12 @@ const qualitySelector = document.getElementById('quality-selector');
 const qualityRange = document.getElementById('quality-range');
 const qualityValueDisplay = document.getElementById('quality-value');
 
+const proLimitModal = document.getElementById('pro-limit-modal');
+const closeLimitModalBtn = document.getElementById('close-limit-modal');
+const continueFreeBtn = document.getElementById('continue-free');
+
+const FREE_SIZE_LIMIT = 20 * 1024 * 1024; // 20MB
+
 // Mobile Menu Logic
 const menuToggle = document.getElementById('menu-toggle');
 const navContainer = document.getElementById('nav-container');
@@ -112,6 +118,18 @@ function closeModal() {
     resetUI();
 }
 
+closeLimitModalBtn.addEventListener('click', () => {
+    proLimitModal.classList.add('hidden');
+});
+
+continueFreeBtn.addEventListener('click', () => {
+    proLimitModal.classList.add('hidden');
+});
+
+proLimitModal.addEventListener('click', (e) => {
+    if (e.target === proLimitModal) proLimitModal.classList.add('hidden');
+});
+
 closeModalBtn.addEventListener('click', closeModal);
 modalContainer.addEventListener('click', (e) => {
     if (e.target === modalContainer) closeModal();
@@ -151,11 +169,24 @@ fileInput.addEventListener('change', (e) => {
 });
 
 function handleFiles(files) {
-    uploadedFiles = [...files];
+    const filesArray = Array.from(files);
+    const hasLargeFiles = filesArray.some(file => file.size > FREE_SIZE_LIMIT);
+
+    if (hasLargeFiles) {
+        proLimitModal.classList.remove('hidden');
+        // Filter out large files for free users
+        uploadedFiles = filesArray.filter(file => file.size <= FREE_SIZE_LIMIT);
+    } else {
+        uploadedFiles = filesArray;
+    }
+
     if (uploadedFiles.length > 0) {
         updateFileList();
         dropZone.classList.add('hidden');
         fileListContainer.classList.remove('hidden');
+    } else if (hasLargeFiles) {
+        // If all files were large and removed
+        resetUI();
     }
 }
 
