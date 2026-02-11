@@ -1,3 +1,4 @@
+import './style.css';
 import { imagesToPdf, pdfToImages, convertImageFormat } from './utils/converter.js';
 
 // Main UI Logic
