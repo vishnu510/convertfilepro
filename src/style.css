@@ -478,6 +478,39 @@ body {
     gap: 0.75rem;
 }
 
+/* Footer */
+.footer {
+    padding: 4rem 0 2rem;
+    text-align: center;
+    border-top: 1px solid var(--border);
+    margin-top: 4rem;
+}
+
+.footer-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem;
+}
+
+.footer-brand {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.footer-brand p {
+    color: var(--text-secondary);
+    font-size: 0.95rem;
+}
+
+.footer-bottom {
+    margin-top: 1rem;
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+}
+
 /* Blobs */
 .blob {
     position: absolute;
@@ -554,9 +587,11 @@ body {
     .nav-active .bar:nth-child(1) {
         transform: translateY(8px) rotate(45deg);
     }
+
     .nav-active .bar:nth-child(2) {
         opacity: 0;
     }
+
     .nav-active .bar:nth-child(3) {
         transform: translateY(-8px) rotate(-45deg);
     }
