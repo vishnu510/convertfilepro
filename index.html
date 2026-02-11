@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FileConverter Pro | All-in-One File Tools</title>
+    <meta name="description"
+        content="Fast, secure, and easy-to-use client-side file converter. Convert JPG to PDF, PDF to JPG, PNG to JPG, and more.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/style.css">
+</head>
+
+<body>
+    <header class="header">
+        <nav class="container nav">
+            <a href="/" class="logo">
+                <span class="logo-icon">📂</span>
+                <span class="logo-text">FileConverter<span>Pro</span></span>
+            </a>
+            <div class="nav-links">
+                <a href="#tools" class="nav-link">Tools</a>
+                <a href="https://github.com" class="nav-link">Github</a>
+                <button class="btn btn-primary">Try Pro</button>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <section class="hero">
+            <div class="container hero-content">
+                <h1 class="hero-title">Every tool you need to <span class="gradient-text">Convert Files</span> in one
+                    place</h1>
+                <p class="hero-subtitle">Fast, secure, and 100% client-side. Your files never leave your browser.</p>
+                <div class="hero-cta">
+                    <a href="#tools" class="btn btn-large btn-primary">Get Started</a>
+                    <a href="#how-it-works" class="btn btn-large btn-outline">How it works</a>
+                </div>
+            </div>
+            <div class="hero-background-blobs">
+                <div class="blob blob-1"></div>
+                <div class="blob blob-2"></div>
+            </div>
+        </section>
+
+        <section id="tools" class="tools-section">
+            <div class="container">
+                <div class="section-header">
+                    <h2 class="section-title">Common Tools</h2>
+                    <p class="section-description">Choose a tool to start converting your files instantly.</p>
+                </div>
+
+                <div class="tools-grid">
+                    <div class="tool-card" id="tool-jpg-pdf" data-type="jpg-to-pdf">
+                        <div class="tool-icon jpg-pdf">📄</div>
+                        <h3 class="tool-name">JPG to PDF</h3>
+                        <p class="tool-info">Convert JPG images to PDF documents in seconds.</p>
+                        <span class="tool-action">Start →</span>
+                    </div>
+
+                    <div class="tool-card" id="tool-pdf-jpg" data-type="pdf-to-jpg">
+                        <div class="tool-icon pdf-jpg">🖼️</div>
+                        <h3 class="tool-name">PDF to JPG</h3>
+                        <p class="tool-info">Extract images or save PDF pages as JPG files.</p>
+                        <span class="tool-action">Start →</span>
+                    </div>
+
+                    <div class="tool-card" id="tool-png-jpg" data-type="png-to-jpg">
+                        <div class="tool-icon png-jpg">🔄</div>
+                        <h3 class="tool-name">PNG to JPG</h3>
+                        <p class="tool-info">Convert PNG images to JPG format quickly.</p>
+                        <span class="tool-action">Start →</span>
+                    </div>
+
+                    <div class="tool-card" id="tool-jpg-png" data-type="jpg-to-png">
+                        <div class="tool-icon jpg-png">🎨</div>
+                        <h3 class="tool-name">JPG to PNG</h3>
+                        <p class="tool-info">Convert JPG images to PNG with ease.</p>
+                        <span class="tool-action">Start →</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <div class="logo">
+                        <span class="logo-icon">📂</span>
+                        <span class="logo-text">FileConverter<span>Pro</span></span>
+                    </div>
+                    <p>The smartest way to handle your file conversions.</p>
+                </div>
+                <div class="footer-bottom">
+                    <p>&copy; 2026 FileConverter Pro. Built with privacy in mind.</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Conversion Modal -->
+    <div id="modal-container" class="modal-container hidden">
+        <div class="modal">
+            <button class="modal-close" id="close-modal">&times;</button>
+            <div class="modal-header">
+                <h2 id="modal-title">Convert JPG to PDF</h2>
+                <p id="modal-subtitle">Upload your images to begin conversion</p>
+            </div>
+            <div class="modal-content">
+                <div id="drop-zone" class="drop-zone">
+                    <div class="drop-zone-content">
+                        <div class="upload-icon">⬆️</div>
+                        <p class="upload-text">Drag & drop files here or <span class="highlight">browse</span></p>
+                        <p class="upload-limit">Max file size: 50MB</p>
+                    </div>
+                    <input type="file" id="file-input" class="file-input" multiple>
+                </div>
+
+                <div id="file-list-container" class="file-list-container hidden">
+                    <ul id="file-list" class="file-list"></ul>
+                    <div class="actions">
+                        <button id="convert-btn" class="btn btn-primary btn-full">Convert Files</button>
+                    </div>
+                </div>
+
+                <div id="processing-container" class="processing-container hidden">
+                    <div class="loader"></div>
+                    <p id="processing-status">Processing your files...</p>
+                    <div class="progress-bar">
+                        <div id="progress-fill" class="progress-fill"></div>
+                    </div>
+                </div>
+
+                <div id="result-container" class="result-container hidden">
+                    <div class="success-icon">✅</div>
+                    <h3>Conversion Complete!</h3>
+                    <p>Your files are ready for download.</p>
+                    <div class="result-actions">
+                        <button id="download-btn" class="btn btn-success btn-full">Download Now</button>
+                        <button id="reset-btn" class="btn btn-outline btn-full">Convert More</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script type="module" src="/src/main.js"></script>
+</body>
+
+</html>
