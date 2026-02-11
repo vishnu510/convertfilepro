@@ -28,10 +28,23 @@ body {
     overflow-x: hidden;
 }
 
+html,
+body {
+    overflow-x: hidden;
+    width: 100%;
+    position: relative;
+}
+
 .container {
     max-width: 1200px;
     margin: 0 auto;
     padding: 0 1.5rem;
+}
+
+@media (max-width: 480px) {
+    .container {
+        padding: 0 1rem;
+    }
 }
 
 /* Header & Nav */
@@ -111,7 +124,7 @@ body {
 }
 
 .hero-title {
-    font-size: 4rem;
+    font-size: clamp(2rem, 8vw, 4.5rem);
     font-weight: 800;
     line-height: 1.1;
     margin-bottom: 1.5rem;
@@ -552,11 +565,11 @@ body {
         position: fixed;
         top: 0;
         right: -100%;
-        width: 80%;
-        max-width: 350px;
+        width: 100%;
+        max-width: 100%;
         height: 100vh;
         background: var(--bg-modal);
-        padding: 6rem 2rem 2rem;
+        padding: 6rem 1.5rem 2rem;
         transition: var(--transition);
         box-shadow: -10px 0 30px rgba(0, 0, 0, 0.5);
         z-index: 1000;
@@ -569,17 +582,19 @@ body {
 
     .nav-links {
         flex-direction: column;
-        align-items: flex-start;
+        align-items: center;
         gap: 2rem;
+        text-align: center;
     }
 
     .nav-link {
-        font-size: 1.25rem;
+        font-size: 1.5rem;
         width: 100%;
     }
 
     .nav-links .btn {
         width: 100%;
+        max-width: 300px;
         margin-top: 1rem;
     }
 
@@ -597,16 +612,30 @@ body {
     }
 
     .hero-title {
-        font-size: 2.75rem;
+        /* font-size handled by clamp */
+        margin-bottom: 1rem;
+    }
+
+    .why-us-section {
+        padding: 3rem 0;
+    }
+
+    .why-us-grid {
+        margin-top: 2rem;
+    }
+
+    .why-us-card {
+        padding: 1.5rem !important;
     }
 
     .hero-subtitle {
-        font-size: 1.1rem;
+        font-size: 1rem;
     }
 
     .hero-cta {
         flex-direction: column;
-        padding: 0 1rem;
+        padding: 0;
+        gap: 1rem;
     }
 
     .btn-large {
@@ -614,29 +643,36 @@ body {
     }
 
     .modal {
-        padding: 2rem 1.5rem;
+        padding: 1.5rem 1rem;
         width: 95%;
+        max-height: 90vh;
+        overflow-y: auto;
     }
 
     .section-title {
-        font-size: 2rem;
+        font-size: 1.85rem;
     }
 
     .tools-grid {
         grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+
+    .tool-card {
+        padding: 1.5rem;
     }
 }
 
-@media (max-width: 480px) {
+@media (max-width: 360px) {
     .hero-title {
-        font-size: 2.25rem;
-    }
-
-    .hero {
-        padding: 8rem 0 4rem;
+        font-size: 1.85rem;
     }
 
     .logo-text {
-        font-size: 1.25rem;
+        font-size: 1.1rem;
+    }
+
+    .hero {
+        padding: 6rem 0 3rem;
     }
 }
