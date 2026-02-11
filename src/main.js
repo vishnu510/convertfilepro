@@ -198,7 +198,7 @@ convertBtn.addEventListener('click', async () => {
 
     } catch (error) {
         console.error('Conversion failed:', error);
-        alert('An error occurred during conversion. Please try again.');
+        alert(`An error occurred: ${error.message || 'Please try again.'}`);
         resetUI();
     }
 });

@@ -108,12 +108,21 @@ export async function convertImageFormat(file, targetFormat) {
 export async function compressPdf(file) {
     const arrayBuffer = await file.arrayBuffer();
     const pdf = await pdfjsLib.getDocument({ data: arrayBuffer }).promise;
-    const doc = new jsPDF();
+
+    // Create new PDF with no default size (will be set per page)
+    const doc = new jsPDF({
+        orientation: 'p',
+        unit: 'px',
+        format: 'a4'
+    });
 
     for (let i = 1; i <= pdf.numPages; i++) {
         const page = await pdf.getPage(i);
-        // Reduce scale for compression
-        const viewport = page.getViewport({ scale: 1.5 });
+
+        // Use scale index to control quality/file size trade-off
+        // A scale of 1.0 at 72 DPI (default for PDF) is standard
+        const viewport = page.getViewport({ scale: 1.0 });
+
         const canvas = document.createElement('canvas');
         const context = canvas.getContext('2d');
         canvas.height = viewport.height;
@@ -121,14 +130,18 @@ export async function compressPdf(file) {
 
         await page.render({ canvasContext: context, viewport }).promise;
 
-        // Lower quality JPG for compression
-        const imageData = canvas.toDataURL('image/jpeg', 0.6);
+        // Lower quality JPG for compression (0.4 is a good balance for compression)
+        const imageData = canvas.toDataURL('image/jpeg', 0.4);
 
-        const pageWidth = doc.internal.pageSize.getWidth();
-        const pageHeight = doc.internal.pageSize.getHeight();
+        if (i > 1) {
+            doc.addPage([viewport.width, viewport.height], viewport.width > viewport.height ? 'l' : 'p');
+        } else {
+            // Re-initialize first page size
+            doc.deletePage(1);
+            doc.addPage([viewport.width, viewport.height], viewport.width > viewport.height ? 'l' : 'p');
+        }
 
-        if (i > 1) doc.addPage();
-        doc.addImage(imageData, 'JPEG', 0, 0, pageWidth, pageHeight);
+        doc.addImage(imageData, 'JPEG', 0, 0, viewport.width, viewport.height);
     }
 
     return doc.output('blob');
