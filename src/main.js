@@ -5,7 +5,8 @@ import {
     convertImageFormat,
     compressPdf,
     compressImage,
-    convertToWebP
+    convertToWebP,
+    resizeImage
 } from './utils/converter.js';
 
 // Main UI Logic
@@ -28,11 +29,9 @@ const qualitySelector = document.getElementById('quality-selector');
 const qualityRange = document.getElementById('quality-range');
 const qualityValueDisplay = document.getElementById('quality-value');
 
-const proLimitModal = document.getElementById('pro-limit-modal');
-const closeLimitModalBtn = document.getElementById('close-limit-modal');
-const continueFreeBtn = document.getElementById('continue-free');
-
-const FREE_SIZE_LIMIT = 20 * 1024 * 1024; // 20MB
+const resizerSelector = document.getElementById('resizer-selector');
+const resizerRange = document.getElementById('resizer-range');
+const resizerValueDisplay = document.getElementById('resizer-value');
 
 // Mobile Menu Logic
 const menuToggle = document.getElementById('menu-toggle');
@@ -57,6 +56,7 @@ let uploadedFiles = [];
 let resultBlob = null;
 let resultFileName = '';
 let currentQuality = 0.7;
+let currentScale = 1.0;
 
 // Tool selection
 toolCards.forEach(card => {
@@ -67,6 +67,7 @@ toolCards.forEach(card => {
         // Show/Hide quality selector for compression tools
         if (currentTool.includes('compress')) {
             qualitySelector.classList.remove('hidden');
+            resizerSelector.classList.add('hidden');
             convertBtn.textContent = 'Compress Files';
             resetBtn.textContent = 'Compress More';
             // Set default qualities based on tool
@@ -78,8 +79,17 @@ toolCards.forEach(card => {
                 currentQuality = 0.7;
             }
             qualityValueDisplay.textContent = `${qualityRange.value}%`;
+        } else if (currentTool === 'image-resizer') {
+            qualitySelector.classList.add('hidden');
+            resizerSelector.classList.remove('hidden');
+            convertBtn.textContent = 'Resize Image';
+            resetBtn.textContent = 'Resize More';
+            resizerRange.value = 100;
+            currentScale = 1.0;
+            resizerValueDisplay.textContent = '100%';
         } else {
             qualitySelector.classList.add('hidden');
+            resizerSelector.classList.add('hidden');
             convertBtn.textContent = 'Convert Files';
             resetBtn.textContent = 'Convert More';
         }
@@ -93,7 +103,16 @@ toolCards.forEach(card => {
             'compress-pdf': '.pdf',
             'compress-jpg': '.jpg,.jpeg',
             'compress-png': '.png',
-            'jpg-to-webp': '.jpg,.jpeg'
+            'jpg-to-webp': '.jpg,.jpeg',
+            'webp-to-jpg': '.webp',
+            'png-to-webp': '.png',
+            'webp-to-png': '.webp',
+            'compress-webp': '.webp',
+            'image-resizer': '.jpg,.jpeg,.png,.webp,.bmp',
+            'svg-to-png': '.svg',
+            'gif-to-png': '.gif',
+            'bmp-to-jpg': '.bmp',
+            'tiff-to-jpg': '.tiff,.tif'
         };
         fileInput.accept = acceptMapping[currentTool] || '';
 
@@ -108,6 +127,13 @@ qualityRange.addEventListener('input', (e) => {
     currentQuality = value / 100;
 });
 
+// Resizer slider change
+resizerRange.addEventListener('input', (e) => {
+    const value = e.target.value;
+    resizerValueDisplay.textContent = `${value}%`;
+    currentScale = value / 100;
+});
+
 function openModal() {
     modalContainer.classList.remove('hidden');
     resetUI();
@@ -117,18 +143,6 @@ function closeModal() {
     modalContainer.classList.add('hidden');
     resetUI();
 }
-
-closeLimitModalBtn.addEventListener('click', () => {
-    proLimitModal.classList.add('hidden');
-});
-
-continueFreeBtn.addEventListener('click', () => {
-    proLimitModal.classList.add('hidden');
-});
-
-proLimitModal.addEventListener('click', (e) => {
-    if (e.target === proLimitModal) proLimitModal.classList.add('hidden');
-});
 
 closeModalBtn.addEventListener('click', closeModal);
 modalContainer.addEventListener('click', (e) => {
@@ -169,24 +183,12 @@ fileInput.addEventListener('change', (e) => {
 });
 
 function handleFiles(files) {
-    const filesArray = Array.from(files);
-    const hasLargeFiles = filesArray.some(file => file.size > FREE_SIZE_LIMIT);
-
-    if (hasLargeFiles) {
-        proLimitModal.classList.remove('hidden');
-        // Filter out large files for free users
-        uploadedFiles = filesArray.filter(file => file.size <= FREE_SIZE_LIMIT);
-    } else {
-        uploadedFiles = filesArray;
-    }
+    uploadedFiles = Array.from(files);
 
     if (uploadedFiles.length > 0) {
         updateFileList();
         dropZone.classList.add('hidden');
         fileListContainer.classList.remove('hidden');
-    } else if (hasLargeFiles) {
-        // If all files were large and removed
-        resetUI();
     }
 }
 
@@ -256,7 +258,43 @@ convertBtn.addEventListener('click', async () => {
                 break;
             case 'jpg-to-webp':
                 resultBlob = await convertToWebP(uploadedFiles[0]);
-                resultFileName = uploadedFiles[0].name.replace('.jpg', '.webp');
+                resultFileName = uploadedFiles[0].name.replace(/\.(jpg|jpeg)$/i, '.webp');
+                break;
+            case 'webp-to-jpg':
+                resultBlob = await convertImageFormat(uploadedFiles[0], 'image/jpeg');
+                resultFileName = uploadedFiles[0].name.replace(/\.webp$/i, '.jpg');
+                break;
+            case 'png-to-webp':
+                resultBlob = await convertImageFormat(uploadedFiles[0], 'image/webp');
+                resultFileName = uploadedFiles[0].name.replace(/\.png$/i, '.webp');
+                break;
+            case 'webp-to-png':
+                resultBlob = await convertImageFormat(uploadedFiles[0], 'image/png');
+                resultFileName = uploadedFiles[0].name.replace(/\.webp$/i, '.png');
+                break;
+            case 'compress-webp':
+                resultBlob = await compressImage(uploadedFiles[0], 'image/webp', currentQuality);
+                resultFileName = 'compressed.webp';
+                break;
+            case 'image-resizer':
+                resultBlob = await resizeImage(uploadedFiles[0], currentScale, uploadedFiles[0].type);
+                resultFileName = 'resized_' + uploadedFiles[0].name;
+                break;
+            case 'svg-to-png':
+                resultBlob = await convertImageFormat(uploadedFiles[0], 'image/png');
+                resultFileName = uploadedFiles[0].name.replace(/\.svg$/i, '.png');
+                break;
+            case 'gif-to-png':
+                resultBlob = await convertImageFormat(uploadedFiles[0], 'image/png');
+                resultFileName = uploadedFiles[0].name.replace(/\.gif$/i, '.png');
+                break;
+            case 'bmp-to-jpg':
+                resultBlob = await convertImageFormat(uploadedFiles[0], 'image/jpeg');
+                resultFileName = uploadedFiles[0].name.replace(/\.bmp$/i, '.jpg');
+                break;
+            case 'tiff-to-jpg':
+                resultBlob = await convertImageFormat(uploadedFiles[0], 'image/jpeg');
+                resultFileName = uploadedFiles[0].name.replace(/\.(tiff|tif)$/i, '.jpg');
                 break;
         }
 

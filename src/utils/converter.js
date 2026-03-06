@@ -81,25 +81,69 @@ export async function pdfToImages(file) {
 }
 
 /**
- * Convert between image formats (PNG <-> JPG)
+ * Convert between image formats (PNG, JPG, WebP, SVG, BMP, etc.)
  * @param {File} file 
- * @param {string} targetFormat 'image/jpeg' or 'image/png'
+ * @param {string} targetFormat 'image/jpeg', 'image/png', or 'image/webp'
+ * @param {number} quality quality for formats that support it (0.1 to 1.0)
  * @returns {Promise<Blob>}
  */
-export async function convertImageFormat(file, targetFormat) {
+export async function convertImageFormat(file, targetFormat, quality = 0.9) {
     const dataUrl = await fileToDataURL(file);
     const img = new Image();
-    img.src = dataUrl;
-    await new Promise(resolve => img.onload = resolve);
+    
+    return new Promise((resolve, reject) => {
+        img.onload = () => {
+            const canvas = document.createElement('canvas');
+            canvas.width = img.width;
+            canvas.height = img.height;
+            const ctx = canvas.getContext('2d');
+            
+            // Handle transparency for JPEG
+            if (targetFormat === 'image/jpeg') {
+                ctx.fillStyle = '#FFFFFF';
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+            }
+            
+            ctx.drawImage(img, 0, 0);
+            const resultDataUrl = canvas.toDataURL(targetFormat, quality);
+            resolve(dataURLtoBlob(resultDataUrl));
+        };
+        img.onerror = reject;
+        img.src = dataUrl;
+    });
+}
 
-    const canvas = document.createElement('canvas');
-    canvas.width = img.width;
-    canvas.height = img.height;
-    const ctx = canvas.getContext('2d');
-    ctx.drawImage(img, 0, 0);
-
-    const resultDataUrl = canvas.toDataURL(targetFormat, 0.9);
-    return dataURLtoBlob(resultDataUrl);
+/**
+ * Resize an image by a scale factor
+ * @param {File} file 
+ * @param {number} scale Scale factor (0.1 to 2.0)
+ * @param {string} format 'image/jpeg', 'image/png', or 'image/webp'
+ * @returns {Promise<Blob>}
+ */
+export async function resizeImage(file, scale = 1.0, format = 'image/jpeg') {
+    const dataUrl = await fileToDataURL(file);
+    const img = new Image();
+    
+    return new Promise((resolve, reject) => {
+        img.onload = () => {
+            const canvas = document.createElement('canvas');
+            canvas.width = img.width * scale;
+            canvas.height = img.height * scale;
+            const ctx = canvas.getContext('2d');
+            
+            // Handle transparency for JPEG
+            if (format === 'image/jpeg') {
+                ctx.fillStyle = '#FFFFFF';
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+            }
+            
+            ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+            const resultDataUrl = canvas.toDataURL(format, 0.9);
+            resolve(dataURLtoBlob(resultDataUrl));
+        };
+        img.onerror = reject;
+        img.src = dataUrl;
+    });
 }
 
 /**
@@ -152,7 +196,7 @@ export async function compressPdf(file, quality = 0.4) {
 /**
  * Compress an image by reducing quality
  * @param {File} file 
- * @param {string} format 'image/jpeg' or 'image/png'
+ * @param {string} format 'image/jpeg', 'image/png', or 'image/webp'
  * @param {number} quality Compression quality (0.1 to 1.0)
  * @returns {Promise<Blob>}
  */

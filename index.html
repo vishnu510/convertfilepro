@@ -75,7 +75,6 @@
                 <div class="nav-links">
                     <a href="#tools" class="nav-link">Tools</a>
                     <a href="how-it-works.html" class="nav-link">How it works</a>
-                    <a href="pricing.html" class="btn btn-primary">Try Pro</a>
                 </div>
             </div>
         </nav>
@@ -161,6 +160,69 @@
                         <p class="tool-info">Convert JPG to modern WebP format for fast web.</p>
                         <span class="tool-action">Start →</span>
                     </div>
+
+                    <div class="tool-card" id="tool-webp-jpg" data-type="webp-to-jpg">
+                        <div class="tool-icon webp-jpg" aria-label="Convert WebP to JPG">📷</div>
+                        <h3 class="tool-name">WebP to JPG</h3>
+                        <p class="tool-info">Convert WebP images back to JPG format.</p>
+                        <span class="tool-action">Start →</span>
+                    </div>
+
+                    <div class="tool-card" id="tool-png-webp" data-type="png-to-webp">
+                        <div class="tool-icon png-webp" aria-label="Convert PNG to WebP">💠</div>
+                        <h3 class="tool-name">PNG to WebP</h3>
+                        <p class="tool-info">Convert PNG to optimized WebP format.</p>
+                        <span class="tool-action">Start →</span>
+                    </div>
+
+                    <div class="tool-card" id="tool-webp-png" data-type="webp-to-png">
+                        <div class="tool-icon webp-png" aria-label="Convert WebP to PNG">🖼️</div>
+                        <h3 class="tool-name">WebP to PNG</h3>
+                        <p class="tool-info">Convert WebP images to PNG with transparency.</p>
+                        <span class="tool-action">Start →</span>
+                    </div>
+
+                    <div class="tool-card" id="tool-compress-webp" data-type="compress-webp">
+                        <div class="tool-icon compress-webp" aria-label="Compress WebP Image">🧊</div>
+                        <h3 class="tool-name">Compress WebP</h3>
+                        <p class="tool-info">Reduce WebP file size without losing quality.</p>
+                        <span class="tool-action">Start →</span>
+                    </div>
+
+                    <div class="tool-card" id="tool-image-resizer" data-type="image-resizer">
+                        <div class="tool-icon image-resizer" aria-label="Resize Image">📏</div>
+                        <h3 class="tool-name">Image Resizer</h3>
+                        <p class="tool-info">Scale your images to the perfect size.</p>
+                        <span class="tool-action">Start →</span>
+                    </div>
+
+                    <div class="tool-card" id="tool-svg-png" data-type="svg-to-png">
+                        <div class="tool-icon svg-png" aria-label="Convert SVG to PNG">📐</div>
+                        <h3 class="tool-name">SVG to PNG</h3>
+                        <p class="tool-info">Convert vector SVG to high-quality PNG.</p>
+                        <span class="tool-action">Start →</span>
+                    </div>
+
+                    <div class="tool-card" id="tool-gif-png" data-type="gif-to-png">
+                        <div class="tool-icon gif-png" aria-label="Convert GIF to PNG">🎞️</div>
+                        <h3 class="tool-name">GIF to PNG</h3>
+                        <p class="tool-info">Extract frames or convert GIF to PNG.</p>
+                        <span class="tool-action">Start →</span>
+                    </div>
+
+                    <div class="tool-card" id="tool-bmp-jpg" data-type="bmp-to-jpg">
+                        <div class="tool-icon bmp-jpg" aria-label="Convert BMP to JPG">🎞️</div>
+                        <h3 class="tool-name">BMP to JPG</h3>
+                        <p class="tool-info">Convert legacy BMP images to JPG.</p>
+                        <span class="tool-action">Start →</span>
+                    </div>
+
+                    <div class="tool-card" id="tool-tiff-jpg" data-type="tiff-to-jpg">
+                        <div class="tool-icon tiff-jpg" aria-label="Convert TIFF to JPG">📸</div>
+                        <h3 class="tool-name">TIFF to JPG</h3>
+                        <p class="tool-info">Convert professional TIFF images to JPG.</p>
+                        <span class="tool-action">Start →</span>
+                    </div>
                 </div>
             </div>
         </section>
@@ -196,7 +258,7 @@
                     <div class="drop-zone-content">
                         <div class="upload-icon">⬆️</div>
                         <p class="upload-text">Drag & drop files here or <span class="highlight">browse</span></p>
-                        <p class="upload-limit">Max file size: 50MB</p>
+                        <p class="upload-limit">Fast, secure & private</p>
                     </div>
                     <input type="file" id="file-input" class="file-input" multiple>
                 </div>
@@ -213,6 +275,18 @@
                         <div class="quality-labels">
                             <span>Smaller File</span>
                             <span>Better Quality</span>
+                        </div>
+                    </div>
+
+                    <div id="resizer-selector" class="quality-selector hidden">
+                        <div class="quality-info">
+                            <span>Resize Scale</span>
+                            <span id="resizer-value">100%</span>
+                        </div>
+                        <input type="range" id="resizer-range" min="10" max="200" value="100" class="quality-range">
+                        <div class="quality-labels">
+                            <span>10% (Smaller)</span>
+                            <span>200% (Larger)</span>
                         </div>
                     </div>
 
@@ -242,24 +316,9 @@
         </div>
     </div>
 
-    <!-- Pro Limit Modal -->
-    <div id="pro-limit-modal" class="modal-container hidden">
-        <div class="modal">
-            <button class="modal-close" id="close-limit-modal">&times;</button>
-            <div class="limit-popup-content">
-                <div class="limit-icon">🚀</div>
-                <h2 class="limit-title">File Size Limit Reached</h2>
-                <p class="limit-desc">Free users can process files up to 20MB. Upgrade to Pro for up to 200MB and faster
-                    processing!</p>
-                <div class="limit-actions">
-                    <a href="pricing.html" class="btn btn-primary btn-full">View Pro Plan</a>
-                    <button class="btn btn-outline btn-full" id="continue-free">Continue with Free (limit 20MB)</button>
-                </div>
-            </div>
-        </div>
-    </div>
 
     <script type="module" src="src/main.js"></script>
+    <script type="module" src="src/navbar.js"></script>
 </body>
 
 </html>
